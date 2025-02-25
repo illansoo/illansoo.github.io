@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mittags-Abstimmung</title>
+    <link rel="stylesheet" href="style.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
+    <script defer src="script.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>🍽️ Wo sollen wir heute Mittag essen?</h1>
+        <p>Bitte stimme für eine Option:</p>
+        <div id="options">
+            <button onclick="vote('Döner')">🥙 Döner</button>
+            <button onclick="vote('Kottu')">🍛 Kottu</button>
+            <button onclick="vote('Smash Burger')">🍔 Smash Burger</button>
+            <button onclick="vote('Migros')">🥗 Migros</button>
+            <button onclick="vote('Shopi')">🍜 Shopi</button>
+            <button onclick="vote('McDonalds')">🍟 McDonald's</button>
+        </div>
+        <h2>🏆 Aktuell führend: <span id="winner">Noch keine Stimmen</span></h2>
+    </div>
+</body>
+</html>
