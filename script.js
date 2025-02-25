@@ -1,3 +1,10 @@
+document.addEventListener("DOMContentLoaded", async () => {
+    const { createClient } = window.supabase;  // Zugriff auf die globale Supabase-Bibliothek
+    if (!createClient) {
+        console.error("Supabase konnte nicht geladen werden!");
+        return;
+    }
+
 // Supabase Konfiguration
 const SUPABASE_URL = "https://uoxfhghhoqjcxxwfwedd.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVveGZoZ2hob3FqY3h4d2Z3ZWRkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDA0ODA4NDMsImV4cCI6MjA1NjA1Njg0M30.lsKcX4kjk4W0hImBSZQP0G_8mDpfELW5x62fuYFxw1g";
