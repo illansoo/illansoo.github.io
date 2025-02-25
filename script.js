@@ -12,31 +12,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     
     console.log("Supabase erfolgreich initialisiert!", supabase);
 
-    // Nutzer muss sich zuerst einloggen
-    async function login() {
-        let email = prompt("Bitte gib deine E-Mail ein:");
-        let password = prompt("Bitte gib dein Passwort ein:");
-
-        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-
-        if (error) {
-            alert("Falsche Zugangsdaten oder kein Konto vorhanden!");
-            document.body.innerHTML = ""; // Sperrt den Zugriff auf die Seite
-            return false;
-        } else {
-            alert("Erfolgreich eingeloggt!");
-            return true;
-        }
-    }
-
-    // Prüft, ob der Nutzer bereits eingeloggt ist
-    const { data: { user } } = await supabase.auth.getUser();
-
-    if (!user) {
-        const isLoggedIn = await login();
-        if (!isLoggedIn) return;
-    }
-
     // Funktion zum Abstimmen
     async function vote(option) {
         console.log(`Abstimmung für: ${option}`);
