@@ -1,4 +1,16 @@
 document.addEventListener("DOMContentLoaded", async () => {
+    // **Passcode-Schutz**
+    const passcode = "1234"; // Ändere das auf deinen gewünschten Code
+    let userInput = prompt("Bitte gib den Zugangscode ein:");
+
+    if (userInput !== passcode) {
+        alert("Falscher Code! Zugriff verweigert.");
+        document.body.innerHTML = ""; // Sperrt die gesamte Seite
+        return; // Stoppt die weitere Ausführung des Skripts
+    }
+
+    console.log("Zugangscode korrekt! Webseite wird geladen...");
+    
     // Stelle sicher, dass Supabase verfügbar ist
     if (!window.supabase) {
         console.error("Supabase konnte nicht geladen werden!");
