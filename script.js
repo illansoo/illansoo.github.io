@@ -89,6 +89,30 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
 
         historyElement.appendChild(container);
+
+        // Reset Button hinzufügen
+        const resetButton = document.createElement("button");
+        resetButton.textContent = "Reset";
+        resetButton.style.display = "block";
+        resetButton.style.margin = "20px auto";
+        resetButton.style.padding = "10px 20px";
+        resetButton.style.fontSize = "16px";
+        resetButton.style.cursor = "pointer";
+        resetButton.style.border = "none";
+        resetButton.style.borderRadius = "5px";
+        resetButton.style.backgroundColor = "#ff4d4d";
+        resetButton.style.color = "white";
+        resetButton.onclick = async () => {
+            const { error } = await supabase.from("votes").delete().neq("id", 0);
+            if (error) {
+                console.error("Fehler beim Zurücksetzen des Verlaufs:", error);
+            } else {
+                alert("Abstimmungsverlauf wurde zurückgesetzt!");
+                updateVoteHistory();
+                updateWinner();
+            }
+        };
+        historyElement.appendChild(resetButton);
     }
 
     // Event Listener für Buttons
