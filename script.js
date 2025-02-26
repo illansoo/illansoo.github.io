@@ -92,8 +92,23 @@ document.addEventListener("DOMContentLoaded", async () => {
         historyElement.appendChild(container);
     }
 
-    // Event Listener für Buttons
-    document.querySelectorAll("button").forEach(button => {
+    // Reset-Button-Funktion
+    const resetButton = document.getElementById("reset-button");
+    if (resetButton) {
+        resetButton.addEventListener("click", async () => {
+            const { error } = await supabase.from("votes").delete().neq("id", 0);
+            if (error) {
+                console.error("Fehler beim Zurücksetzen des Verlaufs:", error);
+            } else {
+                alert("Abstimmungsverlauf wurde zurückgesetzt!");
+                updateVoteHistory();
+                updateWinner();
+            }
+        });
+    }
+
+    // Event Listener für Abstimmungs-Buttons
+    document.querySelectorAll("#options button").forEach(button => {
         button.addEventListener("click", () => vote(button.textContent.trim()));
     });
 
