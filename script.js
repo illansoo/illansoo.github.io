@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.log("Zugangscode korrekt! Webseite wird geladen...");
 
     // Supabase Initialisierung
-    if (typeof window.supabase === "undefined") {
+    if (!window.supabase) {
         console.error("Supabase konnte nicht geladen werden!");
         return;
     }
@@ -58,12 +58,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // Abstimmungsverlauf aktualisieren
     async function updateVoteHistory() {
-        const historyElement = document.getElementById("vote-history");
-        if (!historyElement) {
-            console.error("Element #vote-history nicht gefunden!");
-            return;
-        }
-
         const { data: votes, error } = await supabase
             .from("votes")
             .select("restaurant, created_at")
@@ -72,6 +66,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             console.error("Fehler beim Abrufen des Verlaufs:", error);
             return;
         }
+        const historyElement = document.getElementById("vote-history");
         historyElement.innerHTML = ""; // Verlauf leeren
         
         const container = document.createElement("div");
@@ -80,39 +75,25 @@ document.addEventListener("DOMContentLoaded", async () => {
         container.style.padding = "10px";
         container.style.marginTop = "20px";
         container.style.backgroundColor = "#f9f9f9";
+        container.style.display = "flex";
+        container.style.flexDirection = "column";
 
         votes.forEach(vote => {
             const time = new Date(vote.created_at).toLocaleTimeString("de-DE");
             const listItem = document.createElement("div");
             listItem.style.display = "flex";
-            listItem.style.justifyContent = "space-between";
-            listItem.style.width = "100%";
+            listItem.style.flexDirection = "column";
             listItem.style.padding = "5px 0";
             listItem.style.borderBottom = "1px solid #ddd";
-            listItem.innerHTML = `<span><strong>${vote.restaurant}</strong></span> <span>${time}</span>`;
+            listItem.innerHTML = `<span><strong>${vote.restaurant}</strong></span><span>${time}</span>`;
             container.appendChild(listItem);
         });
 
         historyElement.appendChild(container);
     }
 
-    // Reset-Button Funktion
-    const resetButton = document.getElementById("reset-button");
-    if (resetButton) {
-        resetButton.addEventListener("click", async () => {
-            const { error } = await supabase.from("votes").delete().neq("id", 0);
-            if (error) {
-                console.error("Fehler beim Zurücksetzen des Verlaufs:", error);
-            } else {
-                alert("Abstimmungsverlauf wurde zurückgesetzt!");
-                updateVoteHistory();
-                updateWinner();
-            }
-        });
-    }
-
-    // Event Listener für Abstimmungs-Buttons
-    document.querySelectorAll("#options button").forEach(button => {
+    // Event Listener für Buttons
+    document.querySelectorAll("button").forEach(button => {
         button.addEventListener("click", () => vote(button.textContent.trim()));
     });
 
