@@ -71,7 +71,10 @@ document.addEventListener("DOMContentLoaded", async () => {
         votes.forEach(vote => {
             const time = new Date(vote.created_at).toLocaleTimeString("de-DE");
             const listItem = document.createElement("div");
-            listItem.textContent = `${vote.restaurant} - ${time}`;
+            listItem.style.display = "flex";
+            listItem.style.justifyContent = "space-between";
+            listItem.style.width = "100%";
+            listItem.innerHTML = `<span>${vote.restaurant}</span> <span>${time}</span>`;
             historyElement.appendChild(listItem);
         });
     }
