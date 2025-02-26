@@ -30,3 +30,41 @@ button {
 button:hover {
     background-color: #0056b3;
 }
+
+/* Stil für den Abstimmungsverlauf-Container */
+#vote-history-container {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 20px auto;
+    background-color: #f9f9f9;
+    width: 90%;
+    max-width: 500px;
+}
+
+/* Stil für die einzelnen Einträge im Abstimmungsverlauf */
+#vote-history div {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Stil für den Reset-Button */
+#reset-button {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+    padding: 10px;
+    font-size: 18px;
+    font-weight: bold; /* Fettschrift für den Button-Text */
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+#reset-button:hover {
+    background-color: #cc0000;
+}
