@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     console.log("Zugangscode korrekt! Webseite wird geladen...");
 
     // Supabase Initialisierung
-    if (!window.supabase) {
+    if (typeof window.supabase === "undefined") {
         console.error("Supabase konnte nicht geladen werden!");
         return;
     }
@@ -58,6 +58,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     // Abstimmungsverlauf aktualisieren
     async function updateVoteHistory() {
+        const historyElement = document.getElementById("vote-history");
+        if (!historyElement) {
+            console.error("Element #vote-history nicht gefunden!");
+            return;
+        }
+
         const { data: votes, error } = await supabase
             .from("votes")
             .select("restaurant, created_at")
@@ -66,7 +72,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             console.error("Fehler beim Abrufen des Verlaufs:", error);
             return;
         }
-        const historyElement = document.getElementById("vote-history");
         historyElement.innerHTML = ""; // Verlauf leeren
         
         const container = document.createElement("div");
@@ -89,24 +94,25 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
 
         historyElement.appendChild(container);
+    }
 
-        // Reset Button hinzufügen
-        const resetButton = document.getElementById("reset-button");
-        if (resetButton) {
-            resetButton.addEventListener("click", async () => {
-                const { error } = await supabase.from("votes").delete().neq("id", 0);
-                if (error) {
-                    console.error("Fehler beim Zurücksetzen des Verlaufs:", error);
-                } else {
-                    alert("Abstimmungsverlauf wurde zurückgesetzt!");
-                    updateVoteHistory();
-                    updateWinner();
-                }
+    // Reset-Button Funktion
+    const resetButton = document.getElementById("reset-button");
+    if (resetButton) {
+        resetButton.addEventListener("click", async () => {
+            const { error } = await supabase.from("votes").delete().neq("id", 0);
+            if (error) {
+                console.error("Fehler beim Zurücksetzen des Verlaufs:", error);
+            } else {
+                alert("Abstimmungsverlauf wurde zurückgesetzt!");
+                updateVoteHistory();
+                updateWinner();
+            }
         });
     }
 
-    // Event Listener für Buttons
-    document.querySelectorAll("button").forEach(button => {
+    // Event Listener für Abstimmungs-Buttons
+    document.querySelectorAll("#options button").forEach(button => {
         button.addEventListener("click", () => vote(button.textContent.trim()));
     });
 
