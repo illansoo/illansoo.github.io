@@ -70,8 +70,8 @@ document.addEventListener("DOMContentLoaded", async () => {
         historyElement.innerHTML = ""; // Verlauf leeren
         votes.forEach(vote => {
             const time = new Date(vote.created_at).toLocaleTimeString("de-DE");
-            const listItem = document.createElement("li");
-            listItem.textContent = `${time} - ${vote.restaurant}`;
+            const listItem = document.createElement("div");
+            listItem.textContent = `${vote.restaurant} - ${time}`;
             historyElement.appendChild(listItem);
         });
     }
