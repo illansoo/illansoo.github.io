@@ -68,15 +68,27 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
         const historyElement = document.getElementById("vote-history");
         historyElement.innerHTML = ""; // Verlauf leeren
+        
+        const container = document.createElement("div");
+        container.style.border = "1px solid #ccc";
+        container.style.borderRadius = "8px";
+        container.style.padding = "10px";
+        container.style.marginTop = "20px";
+        container.style.backgroundColor = "#f9f9f9";
+
         votes.forEach(vote => {
             const time = new Date(vote.created_at).toLocaleTimeString("de-DE");
             const listItem = document.createElement("div");
             listItem.style.display = "flex";
             listItem.style.justifyContent = "space-between";
             listItem.style.width = "100%";
-            listItem.innerHTML = `<span>${vote.restaurant}</span> <span>${time}</span>`;
-            historyElement.appendChild(listItem);
+            listItem.style.padding = "5px 0";
+            listItem.style.borderBottom = "1px solid #ddd";
+            listItem.innerHTML = `<span><strong>${vote.restaurant}</strong></span> <span>${time}</span>`;
+            container.appendChild(listItem);
         });
+
+        historyElement.appendChild(container);
     }
 
     // Event Listener für Buttons
